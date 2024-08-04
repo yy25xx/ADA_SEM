@@ -2,7 +2,10 @@
 #include<stdlib.h>
 int a[10][10],d[10][10],n;
 
-
+int min(int a,int b)
+{
+    return(a<b)?a:b;
+}
 void path()
 {
     int i,j,k;
@@ -11,14 +14,8 @@ void path()
         for(i=0;i<n;i++)
         {
             for(j=0;j<n;j++)
-
             {
-                if ((d[i][j])||(d[i][k]&&d[k][j])) 
-                {
-                d[i][j]=1;
-                }
-
-                
+                d[i][j]=min(d[i][j],d[i][k]+d[k][j]);
             }
         }
     }
@@ -28,7 +25,7 @@ int main()
     int i,j;
     printf("Enter the number of vertices");
     scanf("%d",&n);
-    printf("Enter the adjacent matrix");
+    printf("Enter the cost matrix");
     for(i=0;i<n;i++)
     {
         for(j=0;j<n;j++)
