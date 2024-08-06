@@ -82,12 +82,9 @@ void solveNQ(int n) {
 int main() {
     int n;
     printf("Enter the number of queens: ");
-   // scanf("%d", &n);
+   scanf("%d", &n);
      
-    if (n > MAX) {
-        printf("Number of queens exceeds the maximum limit (%d)\n", MAX);
-        return 1;
-    }
+    
 
     solveNQ(n);
     return 0;

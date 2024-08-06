@@ -1,1 +1,1 @@
-arr[i] = rand() % 100;
+#define MAX 20 // Maximum number of queens
