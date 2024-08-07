@@ -18,7 +18,7 @@ int selectMinVertex(int value[], bool setMST[], int V) {
 }
 
 // Function to find the Minimum Spanning Tree using Prim's Algorithm
-void findMST(int graph[MAX][MAX], int V) {
+void findMST(int cost[MAX][MAX], int V) {
     int parent[MAX];     // Stores MST
     int value[MAX];      // Used for edge relaxation
     bool setMST[MAX];    // TRUE->Vertex is included in MST
@@ -39,7 +39,7 @@ void findMST(int graph[MAX][MAX], int V) {
         int U = selectMinVertex(value, setMST, V);
         setMST[U] = true; // Include new Vertex in MST
 
-        // Relax adjacent vertices (not yet included in MST)
+        // Relax costacent vertices (not yet included in MST)
         for (int j = 0; j < V; ++j) {
             /*
              * 3 constraints to relax:
@@ -47,38 +47,37 @@ void findMST(int graph[MAX][MAX], int V) {
              * 2. Vertex j is not included in MST.
              * 3. Edge weight is smaller than current edge weight.
              */
-            if (graph[U][j] != 0 && !setMST[j] && graph[U][j] < value[j]) {
-                value[j] = graph[U][j];
+            if (cost[U][j] != 0 && !setMST[j] && cost[U][j] < value[j]) {
+                value[j] = cost[U][j];
                 parent[j] = U;
             }
         }
     }
 
     // Print MST
-    for (int i = 1; i < V; ++i)
-        printf("U->V: %d->%d  wt = %d\n", parent[i], i, graph[parent[i]][i]);
+    for (int i = 1; i <= V; ++i)
+        printf("U->V: %d->%d  wt = %d\n", parent[i], i, cost[parent[i]][i]);
 }
 
 int main() {
-    int V, E;
-    int graph[MAX][MAX];
+    int V;
+    int cost[MAX][MAX];
 
     // Input number of vertices
     printf("Enter the number of vertices: ");
     scanf("%d", &V);
 
-    
-
-    // Input the adjacency matrix
-    printf("Enter the adjacency matrix:\n");
+    // Input the costacency matrix
+    printf("Enter the cost matrix:\n");
     for (int i = 0; i < V; ++i) {
         for (int j = 0; j < V; ++j) {
-            scanf("%d", &graph[i][j]);
+            scanf("%d", &cost[i][j]);
         }
     }
 
     // Find and print the MST
-    findMST(graph, V);
+    findMST(cost, V);
 
     return 0;
 }
+

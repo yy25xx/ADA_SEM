@@ -1,37 +1,85 @@
-void merge(int arr[], int l, int mid, int h) {
-    int i = l;       // Starting index for the left subarray
-    int j = mid + 1; // Starting index for the right subarray
-    int k = 0;       // Starting index for the temporary array
-    int n1 = mid - l + 1; // Number of elements in the left subarray
-    int n2 = h - mid;     // Number of elements in the right subarray
+#include <stdio.h>
+#include <limits.h>
+#include <stdbool.h>
 
-    // Temporary array to hold merged elements
-    int* temp = (int*)malloc((n1 + n2) * sizeof(int));
+#define MAX 100 // Maximum number of vertices
 
-    // Merge the elements from both subarrays into the temporary array
-    while (i <= mid && j <= h) {
-        if (arr[i] <= arr[j]) {
-            temp[k++] = arr[i++]; // If the current element in the left subarray is smaller or equal, add it to the temporary array
-        } else {
-            temp[k++] = arr[j++]; // If the current element in the right subarray is smaller, add it to the temporary array
+// Function to select the vertex with the minimum value which is not yet processed
+int selectMinVertex(int value[], bool setMST[], int V) {
+    int minimum = INT_MAX;
+    int vertex;
+    for (int i = 0; i < V; ++i) {
+        if (!setMST[i] && value[i] < minimum) {
+            vertex = i;
+            minimum = value[i];
+        }
+    }
+    return vertex;
+}
+
+// Function to find the Minimum Spanning Tree using Prim's Algorithm
+void findMST(int cost[MAX][MAX], int V) {
+    int parent[MAX];     // Stores MST
+    int value[MAX];      // Used for edge relaxation
+    bool setMST[MAX];    // TRUE->Vertex is included in MST
+
+    // Initialize all values to infinity and setMST as false
+    for (int i = 0; i < V; ++i) {
+        value[i] = INT_MAX;
+        setMST[i] = false;
+    }
+
+    // Assuming start point as Node-0
+    parent[0] = -1; // Start node has no parent
+    value[0] = 0;   // Start node has value=0 to get picked first
+
+    // Form MST with (V-1) edges
+    for (int i = 0; i < V - 1; ++i) {
+        // Select best Vertex by applying greedy method
+        int U = selectMinVertex(value, setMST, V);
+        setMST[U] = true; // Include new Vertex in MST
+
+        // Relax costacent vertices (not yet included in MST)
+        for (int j = 0; j < V; ++j) {
+            /*
+             * 3 constraints to relax:
+             * 1. Edge is present from U to j.
+             * 2. Vertex j is not included in MST.
+             * 3. Edge weight is smaller than current edge weight.
+             */
+            if (cost[U][j] != 0 && !setMST[j] && cost[U][j] < value[j]) {
+                value[j] = cost[U][j];
+                parent[j] = U;
+            }
         }
     }
 
-    // Copy remaining elements from the left subarray, if any
-    while (i <= mid) {
-        temp[k++] = arr[i++];
-    }
-
-    // Copy remaining elements from the right subarray, if any
-    while (j <= h) {
-        temp[k++] = arr[j++];
-    }
-
-    // Copy merged elements back to the original array
-    for (i = l, k = 0; i <= h; i++, k++) {
-        arr[i] = temp[k];
-    }
-
-    // Free the temporary array to avoid memory leaks
-    free(temp);
+    // Print MST
+    for (int i = 1; i < V; ++i)
+        printf("U->V: %d->%d  wt = %d\n", parent[i], i, cost[parent[i]][i]);
 }
+
+int main() {
+    int V, E;
+    int cost[MAX][MAX];
+
+    // Input number of vertices
+    printf("Enter the number of vertices: ");
+    scanf("%d", &V);
+
+
+
+    // Input the costacency matrix
+    printf("Enter the cost matrix:\n");
+    for (int i = 0; i < V; ++i) {
+        for (int j = 0; j < V; ++j) {
+            scanf("%d", &cost[i][j]);
+        }
+    }
+
+    // Find and print the MST
+    findMST(cost, V);
+
+    return 0;
+}
+
