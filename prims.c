@@ -2,9 +2,10 @@
 #include <limits.h>
 #include <stdbool.h>
 
-#define V 6 // Number of vertices
+#define MAX 100 // Maximum number of vertices
 
-int selectMinVertex(int value[], bool setMST[]) {
+// Function to select the vertex with the minimum value which is not yet processed
+int selectMinVertex(int value[], bool setMST[], int V) {
     int minimum = INT_MAX;
     int vertex;
     for (int i = 0; i < V; ++i) {
@@ -16,11 +17,13 @@ int selectMinVertex(int value[], bool setMST[]) {
     return vertex;
 }
 
-void findMST(int graph[V][V]) {
-    int parent[V];     // Stores MST
-    int value[V];      // Used for edge relaxation
-    bool setMST[V];    // TRUE->Vertex is included in MST
+// Function to find the Minimum Spanning Tree using Prim's Algorithm
+void findMST(int graph[MAX][MAX], int V) {
+    int parent[MAX];     // Stores MST
+    int value[MAX];      // Used for edge relaxation
+    bool setMST[MAX];    // TRUE->Vertex is included in MST
 
+    // Initialize all values to infinity and setMST as false
     for (int i = 0; i < V; ++i) {
         value[i] = INT_MAX;
         setMST[i] = false;
@@ -28,12 +31,12 @@ void findMST(int graph[V][V]) {
 
     // Assuming start point as Node-0
     parent[0] = -1; // Start node has no parent
-    value[0] = 0;   // Start node has value=0 to get picked 1st
+    value[0] = 0;   // Start node has value=0 to get picked first
 
     // Form MST with (V-1) edges
     for (int i = 0; i < V - 1; ++i) {
         // Select best Vertex by applying greedy method
-        int U = selectMinVertex(value, setMST);
+        int U = selectMinVertex(value, setMST, V);
         setMST[U] = true; // Include new Vertex in MST
 
         // Relax adjacent vertices (not yet included in MST)
@@ -57,13 +60,30 @@ void findMST(int graph[V][V]) {
 }
 
 int main() {
-    int graph[V][V] = { {0, 4, 6, 0, 0, 0},
-                        {4, 0, 6, 3, 4, 0},
-                        {6, 6, 0, 1, 8, 0},
-                        {0, 3, 1, 0, 2, 3},
-                        {0, 4, 8, 2, 0, 7},
-                        {0, 0, 0, 3, 7, 0} };
+    int V, E;
+    int graph[MAX][MAX];
 
-    findMST(graph);
+    // Input number of vertices
+    printf("Enter the number of vertices: ");
+    scanf("%d", &V);
+
+    // Initialize the graph matrix to 0
+    for (int i = 0; i < V; ++i) {
+        for (int j = 0; j < V; ++j) {
+            graph[i][j] = 0;
+        }
+    }
+
+    // Input the adjacency matrix
+    printf("Enter the adjacency matrix:\n");
+    for (int i = 0; i < V; ++i) {
+        for (int j = 0; j < V; ++j) {
+            scanf("%d", &graph[i][j]);
+        }
+    }
+
+    // Find and print the MST
+    findMST(graph, V);
+
     return 0;
 }

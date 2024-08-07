@@ -48,9 +48,7 @@ int main() {
 
     // Initialize adjacency matrix and visited array
     for (int i = 0; i < V; i++) {
-        for (int j = 0; j < V; j++) {
-            adj[i][j] = 0; // Initialize all edges to 0 (no edge)
-        }
+       
         visited[i] = 0; // Mark all vertices as unvisited
     }
 
