@@ -6,10 +6,10 @@
 int parent[MAX]; // Array to store the parent of each node
 
 // Function to find the root of a node
-int find(int i);
+/*int find(int i);
 
 // Function to unite two subsets
-void uni(int i, int j);
+void uni(int i, int j);*/
 
 // Function to implement Kruskal's algorithm for finding the Minimum Spanning Tree (MST)
 void kruskal(int n, int cost[MAX][MAX]);
