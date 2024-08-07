@@ -17,7 +17,7 @@ int selectMinVertex(int value[], int processed[], int V) {
 }
 
 // Function to implement Dijkstra's algorithm
-void dijkstra(int graph[MAX][MAX], int V, int source) {
+void dijkstra(int cost[MAX][MAX], int V, int source) {
     int parent[MAX];  // Stores shortest path structure
     int value[MAX];   // Keeps shortest path values to each vertex from source
     int processed[MAX];  // TRUE->Vertex is processed
@@ -36,33 +36,33 @@ void dijkstra(int graph[MAX][MAX], int V, int source) {
     for (int i = 0; i < V - 1; ++i) {
         // Select best Vertex by applying greedy method
         int U = selectMinVertex(value, processed, V);
-        processed[U] = 1;  // Include new Vertex in shortest path graph
+        processed[U] = 1;  // Include new Vertex in shortest path cost
 
-        // Relax adjacent vertices (not yet included in shortest path graph)
+        // Relax adjacent vertices (not yet included in shortest path cost)
         for (int j = 0; j < V; ++j) {
             /* 3 conditions to relax:-
                   1. Edge is present from U to j.
-                  2. Vertex j is not included in shortest path graph.
+                  2. Vertex j is not included in shortest path cost.
                   3. Edge weight is smaller than current edge weight.
             */
-            if (graph[U][j] != 0 && !processed[j] && value[U] != INT_MAX && (value[U] + graph[U][j] < value[j])) {
-                value[j] = value[U] + graph[U][j];
+            if (cost[U][j] != 0 && !processed[j] && value[U] != INT_MAX && (value[U] + cost[U][j] < value[j])) {
+                value[j] = value[U] + cost[U][j];
                 parent[j] = U;
             }
         }
     }
 
-    // Print Shortest Path Graph
+    // Print Shortest Path cost
     for (int i = 0; i < V; ++i) {
         if (i != source) {
-            printf("U->V: %d->%d  wt = %d\n", parent[i], i, graph[parent[i]][i]);
+            printf("U->V: %d->%d  wt = %d\n", parent[i], i, cost[parent[i]][i]);
         }
     }
 }
 
 int main() {
     int V;
-    int graph[MAX][MAX]; // Declare the graph with a fixed size
+    int cost[MAX][MAX]; // Declare the cost with a fixed size
 
     printf("Enter the number of vertices: ");
     scanf("%d", &V);
@@ -70,7 +70,7 @@ int main() {
     printf("Enter the cost matrix:\n");
     for (int i = 0; i < V; ++i) {
         for (int j = 0; j < V; ++j) {
-            scanf("%d", &graph[i][j]);
+            scanf("%d", &cost[i][j]);
         }
     }
 
@@ -78,7 +78,7 @@ int main() {
     printf("Enter the source vertex: ");
     scanf("%d", &source);
 
-    dijkstra(graph, V, source);
+    dijkstra(cost, V, source);
 
     return 0;
 }

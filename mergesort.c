@@ -11,8 +11,7 @@ void merge(int arr[], int l, int mid, int h) {
     int n2 = h - mid;     // Number of elements in the right subarray
 
     // Temporary array to hold merged elements
-    int* temp = (int*)malloc((n1 + n2) * sizeof(int));
-
+    int temp [100000];
     // Merge the elements from both subarrays into the temporary array
     while (i <= mid && j <= h) {
         if (arr[i] <= arr[j]) {
@@ -38,7 +37,7 @@ void merge(int arr[], int l, int mid, int h) {
     }
 
     // Free the temporary array to avoid memory leaks
-    free(temp);
+    
 }
 
 // Recursive mergesort function
@@ -88,7 +87,7 @@ int main() {
     clock_t start = clock();
 
     // Perform mergesort on the array
-    mergeSort(arr, 0, n - 1);
+    mergeSort(arr, 0, n);
 
     // Record end time
     clock_t end = clock();
