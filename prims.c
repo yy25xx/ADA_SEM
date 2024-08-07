@@ -67,12 +67,7 @@ int main() {
     printf("Enter the number of vertices: ");
     scanf("%d", &V);
 
-    // Initialize the graph matrix to 0
-    for (int i = 0; i < V; ++i) {
-        for (int j = 0; j < V; ++j) {
-            graph[i][j] = 0;
-        }
-    }
+    
 
     // Input the adjacency matrix
     printf("Enter the adjacency matrix:\n");
