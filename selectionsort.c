@@ -15,7 +15,7 @@ void selectionSort(int arr[], int n) {
     int i, j, minIdx;
 
     // Traverse through all array elements
-    for (i = 0; i < n-1; i++) {
+    for (i = 0; i < n - 1; i++) {
         // Assume the current element is the minimum
         minIdx = i;
 
@@ -36,7 +36,7 @@ void selectionSort(int arr[], int n) {
     for (int i = 0; i < size; i++) {
         // Print each element followed by a space
         printf("%d ", arr[i]);
-    
+    }
     // Print a newline character at the end
     printf("\n");
 }*/
@@ -80,10 +80,11 @@ int main() {
     // Print the sorted array
     printf("Sorted array:\n");
     //printArray(arr, n);
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i <n; i++) {
         // Print each element followed by a space
         printf("%d ", arr[i]);
     }
+    // Print a newline character at the end
     printf("\n");
     // Print the time taken to sort the array
     printf("Time taken to sort the array: %f seconds\n", time_taken);

@@ -42,12 +42,9 @@ void topologicalSort(int V) {
 }
 
 int main() {
-    int n;
-    printf("Enter the number of vertices: ");
-    scanf("%d", &n);
-
-    int V = n; // Number of vertices
-    int E;
+    int V, E;
+    printf("Enter the number of vertices and edges: ");
+    scanf("%d %d", &V, &E);
 
     // Initialize adjacency matrix and visited array
     for (int i = 0; i < V; i++) {
@@ -57,20 +54,11 @@ int main() {
         visited[i] = 0; // Mark all vertices as unvisited
     }
 
-    // Input number of edges
-    printf("Enter the number of edges: ");
-    scanf("%d", &E);
-
-    // Input edges
-    printf("Enter the edges (source destination):\n");
-    for (int i = 0; i < E; i++) {
-        int src, dest;
-        scanf("%d %d", &src, &dest);
-        // Validate edge input
-        if (src >= 0 && src < V && dest >= 0 && dest < V) {
-            adj[src][dest] = 1; // Set edge in the adjacency matrix
-        } else {
-            printf("Invalid edge: %d -> %d\n", src, dest);
+    // Input adjacency matrix
+    printf("Enter the adjacency matrix:\n");
+    for (int i = 0; i < V; i++) {
+        for (int j = 0; j < V; j++) {
+            scanf("%d", &adj[i][j]);
         }
     }
 
